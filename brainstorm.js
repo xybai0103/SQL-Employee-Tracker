@@ -11,6 +11,20 @@
 
 - a separate file that contains functions for performing specific SQL queries 
 */
+db.promise().query('SELECT * FROM users WHERE id = ?', [1])
+  .then(([rows, fields]) => {
+    // do something with the results
+    console.log(rows);
+  })
+  .catch((error) => {
+    // handle the error
+    console.error(error);
+  })
+  .finally(() => {
+    // release the database connection
+    db.end();
+});
+
 const options = [
   {
     type: 'list',
