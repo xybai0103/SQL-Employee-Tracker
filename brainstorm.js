@@ -3,11 +3,12 @@
 - npm i inquirer
 - npm i mysql2/promise
 - install console.table
+- npm i dotenv
 - create database connection (make sure it runs)
    -make sure database name matches db we are creating
 - create schema.sql and run it.
 - create seeds.swl file and run it.
-- npm i dotenv
+
 - a separate file that contains functions for performing specific SQL queries 
 */
 const options = [
