@@ -1,4 +1,4 @@
-class viewAllDepartments {
+class ViewAllDepartments {
   constructor(db) {
     this.db = db;
   }
@@ -14,7 +14,7 @@ class viewAllDepartments {
 };
 
 
-class viewAllRoles {
+class ViewAllRoles {
   constructor(db) {
     this.db = db;
   }
@@ -34,7 +34,7 @@ class viewAllRoles {
 };
 
 
-class viewAllEmployees {
+class ViewAllEmployees {
   constructor(db) {
     this.db = db;
   }
@@ -55,7 +55,7 @@ class viewAllEmployees {
 };
 
 
-class addDepartment {
+class AddDepartment {
   constructor(db) {
     this.db = db;
   }
@@ -84,7 +84,7 @@ class addDepartment {
 };
 
 
-class addRole {
+class AddRole {
   constructor(db) {
     this.db = db;
   }
@@ -144,7 +144,7 @@ class addRole {
 };
 
 
-class addEmployee {
+class AddEmployee {
   constructor(db) {
     this.db = db;
   }
@@ -247,7 +247,7 @@ class addEmployee {
 };
 
 
-class updateEmployeeRole {
+class UpdateEmployeeRole {
   constructor(db) {
     this.db = db;
   }
@@ -319,3 +319,5 @@ class updateEmployeeRole {
     });
   }
 };
+
+module.exports = {ViewAllDepartments, ViewAllRoles, ViewAllEmployees, AddDepartment, AddRole, AddEmployee, UpdateEmployeeRole};

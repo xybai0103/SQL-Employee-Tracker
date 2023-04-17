@@ -50,7 +50,8 @@ function askOption() {
       } else if(selectedOption = 'Add Department'){
         addDepartment();
       } else{
-        Quit();
+        //exit the node.js if user chose 'quit'
+        process.exit();
       } 
   });
   // Prompt the user to select another option
