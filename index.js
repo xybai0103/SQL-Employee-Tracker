@@ -36,31 +36,33 @@ const options = [
 ];
 
 function askOption() {
-  inquirer.prompt(options).then((answers) => {
+  /*the 'return' statement ensures that the askOption() function returns
+    a promise that can be used to handle the results of the inquirer prompts*/
+  return inquirer.prompt(options).then((answers) => {
       const selectedOption = answers.selectedOption;
 
       let newClass;
 
       if(selectedOption = 'View All Employees'){
-        newClass = new ViewAllDepartments;
+        newClass = new ViewAllEmployees(db);
         newClass.render();
       } else if(selectedOption = 'Add Employee'){
-        newClass = new AddEmployee;
+        newClass = new AddEmployee(db);
         newClass.render();
       } else if(selectedOption = 'Update Employee Role'){
-        newClass = new UpdateEmployeeRole;
+        newClass = new UpdateEmployeeRole(db);
         newClass.render();
       } else if(selectedOption = 'View All Roles'){
-        newClass = new ViewAllRoles;
+        newClass = new ViewAllRoles(db);
         newClass.render();
       } else if(selectedOption = 'Add Role'){
-        newClass = new AddRole;
+        newClass = new AddRole(db);
         newClass.render();
       } else if(selectedOption = 'View All Departments'){
-        newClass = new ViewAllDepartments;
+        newClass = new ViewAllDepartments(db);
         newClass.render();
       } else if(selectedOption = 'Add Department'){
-        newClass = new AddDepartment;
+        newClass = new AddDepartment(db);
         newClass.render();
       } else{
         //exit the node.js if user chose 'quit'
