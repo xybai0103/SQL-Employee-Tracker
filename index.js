@@ -1,6 +1,6 @@
 // Import packages
 const inquirer = require('inquirer');
-const mysql = require('mysql2/promise');
+const mysql = require('mysql2');
 require('dotenv').config();
 
 // Import function classes
