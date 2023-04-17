@@ -4,7 +4,11 @@ class viewAllDepartments {
   }
   render(){
     db.query('SELECT * FROM department', function (err, rows) {
-       console.table(rows);
+       if(err){
+         console.error('Error:', err);
+       }else{
+         console.table(rows);
+       }
     });
   }
 };
@@ -19,8 +23,12 @@ class viewAllRoles {
               JOIN department AS d 
               ON r.department_id = d.id`, 
        function (err, rows) {
-         console.table(rows);
-       });
+         if(err){
+           console.error('Error:', err);
+         }else{
+           console.table(rows);
+         }
+    });
   }
 };
 
@@ -35,7 +43,39 @@ class viewAllEmployees {
               JOIN department AS d ON r.department_id = d.id
               LEFT JOIN employee AS m ON e.manager_id = m.id`,   
        function (err, rows) {
-         console.table(rows);
-       });
+         if(err){
+           console.error('Error:', err);
+         }else{
+           console.table(rows);
+         }
+    });
+  }
+};
+
+class addDepartment {
+  constructor(db) {
+    this.db = db;
+  }
+  
+  inputAddDepartment(){
+    inquirer.prompt([
+        {
+          type: 'input',
+          name: 'addDepartmentInput',
+          message: 'What is the name of the department?',
+        }
+    ])
+    
+    .then(({addDepartmentInput}) => {
+        db.query(`INSERT INTO department (name)
+                    VALUES (?);`, [addDepartmentInput],  
+           function (err, result) {
+             if(err){
+                console.error('Error:', err);
+             }else{
+                console.log(`Added ${addDepartmentInput} to the database`);
+             }           
+        });
+    });
   }
 };
