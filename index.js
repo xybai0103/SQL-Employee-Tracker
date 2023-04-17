@@ -43,34 +43,34 @@ function askOption() {
 
       let newClass;
 
-      if(selectedOption = 'View All Employees'){
+      if(selectedOption === 'View All Employees'){
         newClass = new ViewAllEmployees(db);
         newClass.render();
-      } else if(selectedOption = 'Add Employee'){
+      } else if(selectedOption === 'Add Employee'){
         newClass = new AddEmployee(db);
         newClass.render();
-      } else if(selectedOption = 'Update Employee Role'){
+      } else if(selectedOption === 'Update Employee Role'){
         newClass = new UpdateEmployeeRole(db);
         newClass.render();
-      } else if(selectedOption = 'View All Roles'){
+      } else if(selectedOption === 'View All Roles'){
         newClass = new ViewAllRoles(db);
         newClass.render();
-      } else if(selectedOption = 'Add Role'){
+      } else if(selectedOption === 'Add Role'){
         newClass = new AddRole(db);
         newClass.render();
-      } else if(selectedOption = 'View All Departments'){
+      } else if(selectedOption === 'View All Departments'){
         newClass = new ViewAllDepartments(db);
         newClass.render();
-      } else if(selectedOption = 'Add Department'){
+      } else if(selectedOption === 'Add Department'){
         newClass = new AddDepartment(db);
         newClass.render();
       } else{
         //exit the node.js if user chose 'quit'
         process.exit();
-      } 
+      }
+      // Prompt the user to select another option
+      askOption();
   });
-  // Prompt the user to select another option
-  askOption();
 }
 
 askOption();
