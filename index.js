@@ -38,7 +38,7 @@ function askOption() {
       if(selectedOption = 'View All Employees'){
         viewAllEmployees();
       } else if(selectedOption = 'Add Employee'){
-        addEmployees();
+        addEmployee();
       } else if(selectedOption = 'Update Employee Role'){
         updateEmployeeRole();
       } else if(selectedOption = 'View All Roles'){
