@@ -3,6 +3,9 @@ const inquirer = require('inquirer');
 const mysql = require('mysql2/promise');
 require('dotenv').config();
 
+// Import function classes
+const {ViewAllDepartments, ViewAllRoles, ViewAllEmployees, AddDepartment, AddRole, AddEmployee, UpdateEmployeeRole} = require('./functions');
+
 // Connect to database
 const db = mysql.createConnection(
   {
@@ -35,20 +38,30 @@ const options = [
 function askOption() {
   inquirer.prompt(options).then((answers) => {
       const selectedOption = answers.selectedOption;
+
+      let newClass;
+
       if(selectedOption = 'View All Employees'){
-        viewAllEmployees();
+        newClass = new ViewAllDepartments;
+        newClass.render();
       } else if(selectedOption = 'Add Employee'){
-        addEmployee();
+        newClass = new AddEmployee;
+        newClass.render();
       } else if(selectedOption = 'Update Employee Role'){
-        updateEmployeeRole();
+        newClass = new UpdateEmployeeRole;
+        newClass.render();
       } else if(selectedOption = 'View All Roles'){
-        viewAllRoles();
+        newClass = new ViewAllRoles;
+        newClass.render();
       } else if(selectedOption = 'Add Role'){
-        addRole();
+        newClass = new AddRole;
+        newClass.render();
       } else if(selectedOption = 'View All Departments'){
-        viewAllDepartments();
+        newClass = new ViewAllDepartments;
+        newClass.render();
       } else if(selectedOption = 'Add Department'){
-        addDepartment();
+        newClass = new AddDepartment;
+        newClass.render();
       } else{
         //exit the node.js if user chose 'quit'
         process.exit();
