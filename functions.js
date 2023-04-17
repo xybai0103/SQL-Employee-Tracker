@@ -59,11 +59,11 @@ class addDepartment {
   
   inputAddDepartment(){
     inquirer.prompt([
-        {
-          type: 'input',
-          name: 'addDepartmentInput',
-          message: 'What is the name of the department?',
-        }
+      {
+        type: 'input',
+        name: 'addDepartmentInput',
+        message: 'What is the name of the department?',
+      }
     ])
     
     .then(({addDepartmentInput}) => {
@@ -76,6 +76,64 @@ class addDepartment {
                 console.log(`Added ${addDepartmentInput} to the database`);
              }           
         });
+    });
+  }
+};
+
+class addRole {
+  constructor(db) {
+    this.db = db;
+  }
+  
+  inputAddRole(){
+    db.query('SELECT name FROM department', function (err, results) {
+      if (err) { 
+        console.error('Error:', err);
+        return;
+      }
+      
+      // Extract an array of department names from the query results
+      const departmentNames = results.map((result) => result.name);
+
+      inquirer.prompt([
+        {
+          type: 'input',
+          name: 'roleName',
+          message: 'What is the name of the role?',
+        },
+        {
+          type: 'input',
+          name: 'roleSalary',
+          message: 'What is the salary of the role?',
+        },
+        {
+          type: 'list',
+          name: 'roleDepartment',
+          message: 'Which department does the role belong to?',
+          choices: departmentNames,
+        },
+      ])
+      
+      .then(({roleName, roleSalary, roleDepartment}) => {
+        db.query(`SELECT id FROM department WHERE name = ?`, [roleDepartment], function (err, results) {
+            if (err) {
+              console.error('Error:', err);
+              return;
+            }
+        
+            const departmentId = results[0].id;
+
+            db.query(`INSERT INTO role (title, department_id, salary)
+                      VALUES (?, ?, ?);`, [roleName, departmentId, roleSalary],  
+              function (err, result) {
+                if(err){
+                  console.error('Error:', err);
+                }else{
+                  console.log(`Added ${roleName} to the database`);
+                }           
+            });
+        });
+      });
     });
   }
 };
