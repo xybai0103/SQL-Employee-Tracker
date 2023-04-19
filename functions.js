@@ -109,8 +109,11 @@ class AddRole {
   }
   
   render(){
+    // Save the `this` context for nested functions to use
+    const self = this; 
+
     return new Promise((resolve, reject) => {
-      this.db.query('SELECT name FROM department', function (err, results) {
+      self.db.query('SELECT name FROM department', function (err, results) {
         if (err) { 
           console.error('Error:', err);
           reject(err);
@@ -141,7 +144,7 @@ class AddRole {
         
         .then(({roleName, roleSalary, roleDepartment}) => {
           // Get the id of the department of the added role that the user input to insert into table role
-          this.db.query(`SELECT id FROM department WHERE name = ?`, [roleDepartment], function (err, results) {
+          self.db.query(`SELECT id FROM department WHERE name = ?`, [roleDepartment], function (err, results) {
               if (err) {
                 console.error('Error:', err);
                 reject(err);
@@ -150,7 +153,7 @@ class AddRole {
               //results is an array containing one object [{id = ...}]
               const departmentId = results[0].id;
 
-              this.db.query(`INSERT INTO role (title, department_id, salary)
+              self.db.query(`INSERT INTO role (title, department_id, salary)
                         VALUES (?, ?, ?);`, [roleName, departmentId, roleSalary],  
                 function (err, result) {
                   if(err){
@@ -175,8 +178,11 @@ class AddEmployee {
   }
   
   render(){
+    // Save the `this` context for nested functions to use
+    const self = this; 
+
     return new Promise((resolve, reject) => {
-      this.db.query(`SELECT r.title, CONCAT(e.first_name, ' ', e.last_name) AS employee
+      self.db.query(`SELECT r.title, CONCAT(e.first_name, ' ', e.last_name) AS employee
                 FROM employee AS e
                 JOIN role AS r ON e.role_id = r.id`,
         function (err, results) {
@@ -219,7 +225,7 @@ class AddEmployee {
         
           .then(({firstName, lastName, employeeRole, employeeManager}) => {
             // Get the id of the role of the added employee that the user input to insert into table employee
-            this.db.query(`SELECT id FROM role WHERE title = ?`, [employeeRole], function (err, results) {
+            self.db.query(`SELECT id FROM role WHERE title = ?`, [employeeRole], function (err, results) {
               if (err) {
                 console.error('Error:', err);
                 reject(err);
@@ -234,7 +240,7 @@ class AddEmployee {
                 const managerName = employeeManager.split(' ');
                 const managerFirstName = managerName[0];
                 const managerLastName = managerName[1];
-                this.db.query(`SELECT id FROM employee WHERE first_name = ? AND last_name = ?`, [managerFirstName, managerLastName], function (err, results) {
+                self.db.query(`SELECT id FROM employee WHERE first_name = ? AND last_name = ?`, [managerFirstName, managerLastName], function (err, results) {
                   if (err) {
                     console.error('Error:', err);
                     reject(err);
@@ -244,7 +250,7 @@ class AddEmployee {
                   const managerId = results[0].id;
 
                   // Insert the added employee into the database
-                  this.db.query(`INSERT INTO employee (first_name, last_name, role_id, manager_id)
+                  self.db.query(`INSERT INTO employee (first_name, last_name, role_id, manager_id)
                             VALUES (?, ?, ?, ?);`, [firstName, lastName, roleId, managerId],  
                     function (err, result) {
                       if(err){
@@ -261,7 +267,7 @@ class AddEmployee {
                 no value is provided for manager_id, the column will be 
                 automatically set to NULL in the table.*/
               else {
-                this.db.query(`INSERT INTO employee (first_name, last_name, role_id)
+                self.db.query(`INSERT INTO employee (first_name, last_name, role_id)
                           VALUES (?, ?, ?, ?);`, [firstName, lastName, roleId],  
                   function (err, result) {
                     if(err){
@@ -287,8 +293,11 @@ class UpdateEmployeeRole {
   }
   
   render(){
+    // Save the `this` context for nested functions to use
+    const self = this; 
+
     return new Promise((resolve, reject) => {
-      this.db.query(`SELECT r.title, CONCAT(e.first_name, ' ', e.last_name) AS employee
+      self.db.query(`SELECT r.title, CONCAT(e.first_name, ' ', e.last_name) AS employee
                 FROM employee AS e
                 JOIN role AS r ON e.role_id = r.id`,
         function (err, results) {
@@ -320,7 +329,7 @@ class UpdateEmployeeRole {
         
           .then(({employeeName, employeeNewRole}) => {
             // Get the id of the updated role of the employee that the user input
-            this.db.query(`SELECT id FROM role WHERE title = ?`, [employeeNewRole], function (err, results) {
+            self.db.query(`SELECT id FROM role WHERE title = ?`, [employeeNewRole], function (err, results) {
               if (err) {
                 console.error('Error:', err);
                 reject(err);
@@ -332,7 +341,7 @@ class UpdateEmployeeRole {
               const employeeNameSplit = employeeName.split(' ');
                 const employeeFirstName = employeeNameSplit[0];
                 const employeeLastName = employeeNameSplit[1];
-                this.db.query(`SELECT id FROM employee WHERE first_name = ? AND last_name = ?`, [employeeFirstName, employeeLastName], function (err, results) {
+                self.db.query(`SELECT id FROM employee WHERE first_name = ? AND last_name = ?`, [employeeFirstName, employeeLastName], function (err, results) {
                   if (err) {
                     console.error('Error:', err);
                     reject(err);
@@ -341,7 +350,7 @@ class UpdateEmployeeRole {
                   //results is an array containing one object [{id = ...}]
                   const employeeId = results[0].id;
 
-                  this.db.query(`UPDATE employee
+                  self.db.query(`UPDATE employee
                             SET role_id = ?
                             WHERE id = ?;`, [roleId, employeeId],  
                     function (err, result) {
