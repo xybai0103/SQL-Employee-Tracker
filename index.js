@@ -35,42 +35,38 @@ const options = [
   }
 ];
 
-function askOption() {
-  /*the 'return' statement ensures that the askOption() function returns
-    a promise that can be used to handle the results of the inquirer prompts*/
-  return inquirer.prompt(options).then((answers) => {
-      const selectedOption = answers.selectedOption;
+async function askOption() {
+  try{
+    const answers = await inquirer.prompt(options);
+    
+    const selectedOption = answers.selectedOption;
 
-      let newClass;
+    let newClass;
 
-      if(selectedOption === 'View All Employees'){
-        newClass = new ViewAllEmployees(db);
-        newClass.render();
-      } else if(selectedOption === 'Add Employee'){
-        newClass = new AddEmployee(db);
-        newClass.render();
-      } else if(selectedOption === 'Update Employee Role'){
-        newClass = new UpdateEmployeeRole(db);
-        newClass.render();
-      } else if(selectedOption === 'View All Roles'){
-        newClass = new ViewAllRoles(db);
-        newClass.render();
-      } else if(selectedOption === 'Add Role'){
-        newClass = new AddRole(db);
-        newClass.render();
-      } else if(selectedOption === 'View All Departments'){
-        newClass = new ViewAllDepartments(db);
-        newClass.render();
-      } else if(selectedOption === 'Add Department'){
-        newClass = new AddDepartment(db);
-        newClass.render();
-      } else{
-        //exit the node.js if user chose 'quit'
-        process.exit();
-      }
-      // Prompt the user to select another option
-      askOption();
-  });
+    if(selectedOption === 'View All Employees'){
+      newClass = new ViewAllEmployees(db);
+    } else if(selectedOption === 'Add Employee'){
+      newClass = new AddEmployee(db);
+    } else if(selectedOption === 'Update Employee Role'){
+      newClass = new UpdateEmployeeRole(db);
+    } else if(selectedOption === 'View All Roles'){
+      newClass = new ViewAllRoles(db);
+    } else if(selectedOption === 'Add Role'){
+      newClass = new AddRole(db);
+    } else if(selectedOption === 'View All Departments'){
+      newClass = new ViewAllDepartments(db);
+    } else if(selectedOption === 'Add Department'){
+      newClass = new AddDepartment(db);
+    } else{
+      //exit the node.js if user chose 'quit'
+      process.exit();
+    }
+    await newClass.render();
+    // Prompt the user to select another option
+    askOption();
+  } catch(err) {
+    console.error('Error:', err);
+  }
 }
 
 askOption();
